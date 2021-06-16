@@ -6,15 +6,14 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:27 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/13 10:13:27 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/16 12:57:20 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <unistd.h>
 #include "get_next_line.h"
 
-void	ft_separate(char *tmp, char *buff, char **line)
+static int	ft_separate(char *tmp, char *buff, char **line)
 {
 	int	i;
 	int	j;
@@ -29,6 +28,8 @@ void	ft_separate(char *tmp, char *buff, char **line)
 	if (len == -1)
 		len = (int)ft_strlen(tmp);
 	*line = (char *)malloc(sizeof(**line) * (len + 1));
+	if (!(*line))
+		return (-1);
 	while (tmp[++i] && tmp[i] != '\n')
 		(*line)[i] = tmp[i];
 	(*line)[i] = '\0';
@@ -39,7 +40,30 @@ void	ft_separate(char *tmp, char *buff, char **line)
 	buff[j] = '\0';
 	if (f)
 		free(tmp);
+	return (1);
 }
+
+static int	ft_free(char *tmp)
+{
+	if (tmp != NULL)
+		free(tmp);
+	return (-1);
+}
+
+static int	get_next_line_two(char **tmp, char **buff, int fd)
+{
+	int	rd;
+	int	len;
+
+	rd = 1;
+	while (ft_isnstr('\n', buff) < 0 && rd > 0)
+	{
+		rd = read(fd, *buff, BUFFER_SIZE);
+		if (rf < 0)
+				return (-1);
+	}
+}
+	
 
 int	get_next_line(int fd, char **line)
 {
@@ -49,10 +73,12 @@ int	get_next_line(int fd, char **line)
 	int			len;
 
 	len = 0;
-	if (fd < 0 || !line || BUFFER_SIZE < 0 || read(fd, buff, 0) < 0)
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
 		return (-1);
 	rd = 1;
 	tmp = ft_strjoin_gnl(NULL, buff);
+	if (!tmp)
+		return (-1);
 	while (ft_isinstr('\n', buff) < 0 && rd > 0)
 	{
 		rd = read(fd, buff, BUFFER_SIZE);
@@ -66,45 +92,7 @@ int	get_next_line(int fd, char **line)
 		if (!tmp)
 			return (-1);
 	}
-	ft_separate(tmp, buff, line);
+	if (ft_separate(tmp, buff, line) == -1)
+		return (ft_free(tmp));
 	return (rd > 0);
 }
-
-#if 1
-#include <fcntl.h>
-#include <stdio.h>
-
-int main(int ac, char **av)
-{
-	int		fd;
-	char	*line;
-	int		ct;
-	int		ret;
-	int		i = 0;
-
-	ct = 200;
-	ct++;
-	if (ac == 0)
-		return (0);
-	line = NULL;
-	fd = open(av[1], O_RDONLY);
-	while ((ret = get_next_line(fd, &line)) > 0 && ct > 0)
-	{
-		printf("line (%02i) %02i : |%s|\n", ret, i, line);
-		i++;
-		ct--;
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
-	}
-	if (line)
-	{
-		free(line);
-		line = NULL;
-	}
-
-	return (1);
-}
-#endif
