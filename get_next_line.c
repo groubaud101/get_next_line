@@ -13,17 +13,17 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
+#define CUT 1
+
 static int	ft_separate(char *tmp, char *buff, char **line)
 {
 	int	i;
 	int	j;
 	int	len;
-	int	f;
 
-	i = -1;
-	f = (tmp != NULL);
 	if (tmp == NULL)
 		tmp = buff;
+	i = -1;
 	len = ft_isinstr('\n', tmp);
 	if (len == -1)
 		len = (int)ft_strlen(tmp);
@@ -38,8 +38,6 @@ static int	ft_separate(char *tmp, char *buff, char **line)
 	while (tmp[i])
 		buff[j++] = tmp[i++];
 	buff[j] = '\0';
-	if (f)
-		free(tmp);
 	return (1);
 }
 
@@ -47,23 +45,34 @@ static int	ft_free(char *tmp)
 {
 	if (tmp != NULL)
 		free(tmp);
+	tmp = NULL;
 	return (-1);
 }
 
-static int	get_next_line_two(char **tmp, char **buff, int fd)
+static int	get_next_line_part(char **tmp, char *buff, int fd, int *rd)
 {
-	int	rd;
 	int	len;
 
-	rd = 1;
-	while (ft_isnstr('\n', buff) < 0 && rd > 0)
+	*rd = 1;
+	len = 0;
+	*tmp = ft_strjoin_gnl(NULL, buff);
+	if (!(*tmp))
+		return (-1);
+	while (ft_isinstr('\n', buff) < 0 && *rd > 0)
 	{
-		rd = read(fd, *buff, BUFFER_SIZE);
-		if (rf < 0)
-				return (-1);
+		*rd = read(fd, buff, BUFFER_SIZE);
+		if (*rd < 0)
+			return (-1);
+		if (*rd == 0)
+			break ;
+		buff[*rd] = '\0';
+		len += *rd;
+		*tmp = ft_strjoin_gnl(*tmp, buff);
+		if (!(*tmp))
+			return (-1);
 	}
+	return (len);
 }
-	
 
 int	get_next_line(int fd, char **line)
 {
@@ -72,27 +81,13 @@ int	get_next_line(int fd, char **line)
 	char		*tmp;
 	int			len;
 
-	len = 0;
 	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
 		return (-1);
-	rd = 1;
-	tmp = ft_strjoin_gnl(NULL, buff);
-	if (!tmp)
-		return (-1);
-	while (ft_isinstr('\n', buff) < 0 && rd > 0)
-	{
-		rd = read(fd, buff, BUFFER_SIZE);
-		if (rd < 0)
-			return (-1);
-		if (rd == 0)
-			break ;
-		buff[rd] = '\0';
-		len += rd;
-		tmp = ft_strjoin_gnl(tmp, buff);
-		if (!tmp)
-			return (-1);
-	}
+	len = get_next_line_part(&tmp, buff, fd, &rd);
+	if (len == -1)
+		return (ft_free(tmp));
 	if (ft_separate(tmp, buff, line) == -1)
 		return (ft_free(tmp));
+	ft_free(tmp);
 	return (rd > 0);
 }
