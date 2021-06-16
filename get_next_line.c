@@ -13,8 +13,6 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-#define CUT 1
-
 static int	ft_separate(char *tmp, char *buff, char **line)
 {
 	int	i;
