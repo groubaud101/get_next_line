@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 10:13:42 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/13 10:13:42 by groubaud         ###   ########.fr       */
+/*   Created: 2021/06/17 23:29:28 by groubaud          #+#    #+#             */
+/*   Updated: 2021/06/17 23:29:28 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
 #include <stdlib.h>
 
 int	ft_isinstr(char c, const char *str)
 {
-	int		index;
+	ssize_t		index;
 
 	if (c == '\0')
 		return (-1);
@@ -57,10 +58,10 @@ size_t	ft_strlen(const char *str)
 	}
 }
 
-static char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
 	char	*str;
-	int		index;
+	size_t	index;
 
 	str = (char *)malloc(sizeof(*str) * (ft_strlen(s) + 1));
 	if (!str)
@@ -81,9 +82,12 @@ static char	*ft_strcat(char *dst, const char *src)
 	size_t	s;
 
 	d = ft_strlen(dst);
-	s = -1;
-	while (src[++s])
+	s = 0;
+	while (src[s])
+	{
 		dst[d + s] = src[s];
+		s++;
+	}
 	dst[d + s] = '\0';
 	return (dst);
 }
@@ -91,8 +95,6 @@ static char	*ft_strcat(char *dst, const char *src)
 char	*ft_strjoin_gnl(char *s1, char const *s2)
 {
 	char	*dest;
-	int		dlen;
-	int		len_s1;
 
 	if (!s1 || !s2)
 	{
@@ -102,9 +104,7 @@ char	*ft_strjoin_gnl(char *s1, char const *s2)
 			return (ft_strdup(s2));
 		return (NULL);
 	}
-	len_s1 = ft_strlen(s1);
-	dlen = len_s1 + ft_strlen(s2);
-	dest = (char *)malloc(sizeof(*dest) * (dlen + 1));
+	dest = (char *)malloc(sizeof(*dest) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dest)
 		return (NULL);
 	dest[0] = '\0';

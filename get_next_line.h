@@ -18,6 +18,7 @@
 char	*ft_strjoin_gnl(char *s1, char const *s2);
 int		ft_isinstr(char c, const char *str);
 size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s);
 
 int		get_next_line(int fd, char **line);
 

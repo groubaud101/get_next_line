@@ -13,7 +13,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include "get_next_line.h"
-
+#if 1
 int main(int ac, char **av)
 {
 	int		fd;
@@ -46,3 +46,4 @@ int main(int ac, char **av)
 	}
 	return (1);
 }
+#endif
