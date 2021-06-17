@@ -81,10 +81,10 @@ static char	*ft_strcat(char *dst, const char *src)
 	size_t	s;
 
 	d = ft_strlen(dst);
-	s = 0;
-	while (src[s])
-		dst[d++] = src[s++];
-	dst[d] = '\0';
+	s = -1;
+	while (src[++s])
+		dst[d + s] = src[s];
+	dst[d + s] = '\0';
 	return (dst);
 }
 

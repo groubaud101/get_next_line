@@ -32,9 +32,9 @@ static int	ft_separate(char *tmp, char *buff, char **line)
 		(*line)[i] = tmp[i];
 	(*line)[i] = '\0';
 	i = i + (tmp[i] != '\0');
-	j = 0;
-	while (tmp[i])
-		buff[j++] = tmp[i++];
+	j = -1;
+	while (tmp[i + ++j])
+		buff[j] = tmp[i + j];
 	buff[j] = '\0';
 	return (1);
 }
