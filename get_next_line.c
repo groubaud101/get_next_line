@@ -6,7 +6,7 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:27 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/16 12:57:20 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/18 22:34:07 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	get_next_line(int fd, char **line)
 	char		*tmp;
 
 	tmp = NULL;
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
+		return (ft_free(tmp, buff, 1));
 	if (!buff && BUFFER_SIZE > 0)
 	{
 		buff = (char *)malloc(sizeof(*buff) * (BUFFER_SIZE + 1));
@@ -86,8 +88,6 @@ int	get_next_line(int fd, char **line)
 			return (-1);
 		buff[0] = '\0';
 	}
-	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
-		return (ft_free(tmp, buff, 1));
 	if (get_next_line_part(&tmp, buff, fd, &rd) == -1)
 		return (ft_free(tmp, buff, 1));
 	if (ft_separate(tmp, buff, line) == -1)
