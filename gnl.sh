@@ -12,8 +12,8 @@
 
 #!/bin/bash
 
-gcc -I. -D BUFFER_SIZE=$2 -std=c11 -ggdb3 -Wall -Wextra -Werror main.c get_next_line.c get_next_line_utils.c;
-./a.out $1
+gcc -I. -D BUFFER_SIZE=$1 -std=c11 -ggdb3 -Wall -Wextra -Werror main.c get_next_line.c get_next_line_utils.c;
+./a.out $2
 # rm a.out
 # echo "\n"
 # cat $1

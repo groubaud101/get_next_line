@@ -5,4 +5,4 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
         --log-file=valgrind-out.txt \
-         ./a.out test.txt 10
+         ./a.out $1 $2 $3 $4

@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
+# include "wraloc.h"
 
 char	*ft_strjoin_gnl(char *s1, char const *s2);
 int		ft_isinstr(char c, const char *str);

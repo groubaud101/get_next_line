@@ -12,8 +12,8 @@
 
 #!/bin/bash
 
-gcc -I. -D BUFFER_SIZE=$4 -std=c11 -ggdb3 -Wall -Wextra -Werror *bonus.c
-./a.out $1 $2 $3
+gcc -I. -D BUFFER_SIZE=$1 -std=c11 -ggdb3 -Wall -Wextra -Werror *bonus.c
+./a.out $2 $3 $4
 # rm a.out
 # echo "\n"
 # cat $1

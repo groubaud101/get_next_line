@@ -79,17 +79,19 @@ int	get_next_line(int fd, char **line)
 	char		*tmp;
 
 	tmp = NULL;
-	if (buff == NULL && BUFFER_SIZE > 0)
+	if (!buff && BUFFER_SIZE > 0)
 	{
 		buff = (char *)malloc(sizeof(*buff) * (BUFFER_SIZE + 1));
+		if (!buff)
+			return (-1);
 		buff[0] = '\0';
 	}
-	if (fd < 0 || !line || !buff || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
 		return (ft_free(tmp, buff, 1));
 	if (get_next_line_part(&tmp, buff, fd, &rd) == -1)
 		return (ft_free(tmp, buff, 1));
 	if (ft_separate(tmp, buff, line) == -1)
 		return (ft_free(tmp, buff, 1));
-	ft_free(tmp, buff, (rd == 0));
+	ft_free(tmp, buff, 0);
 	return (rd > 0);
 }
