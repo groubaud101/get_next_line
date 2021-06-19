@@ -6,7 +6,7 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:27 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/18 22:34:07 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/19 22:38:12 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ static int	ft_free(char *tmp, char *buff, int to_free)
 {
 	if (to_free == 1)
 	{
-		free(buff);
+		if (buff != NULL)
+			free(buff);
 		buff = NULL;
 	}
-	free(tmp);
+	if (tmp != NULL)
+		free(tmp);
 	tmp = NULL;
 	return (-1);
 }
@@ -92,6 +94,6 @@ int	get_next_line(int fd, char **line)
 		return (ft_free(tmp, buff, 1));
 	if (ft_separate(tmp, buff, line) == -1)
 		return (ft_free(tmp, buff, 1));
-	ft_free(tmp, buff, 0);
+	ft_free(tmp, buff, (rd == 0));
 	return (rd > 0);
 }
