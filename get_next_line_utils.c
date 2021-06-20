@@ -6,7 +6,7 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:42 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/19 20:05:13 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/20 10:44:19 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,5 @@ char	*ft_strjoin_gnl(char *s1, char const *s2)
 	ft_strcat(dest, s2);
 	if (s1 != NULL)
 		free(s1);
-	s1 = NULL;
 	return (dest);
 }

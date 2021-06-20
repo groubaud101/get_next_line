@@ -6,7 +6,7 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:27 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/19 22:38:12 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/20 10:43:46 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ static int	ft_separate(char *tmp, char *buff, char **line)
 	return (1);
 }
 
-static int	ft_free(char *tmp, char *buff, int to_free)
+static int	ft_free(char **tmp, char **buff, int to_free)
 {
 	if (to_free == 1)
 	{
-		if (buff != NULL)
-			free(buff);
-		buff = NULL;
+		if (*buff != NULL)
+			free(*buff);
+		*buff = NULL;
 	}
-	if (tmp != NULL)
-		free(tmp);
-	tmp = NULL;
+	if (*tmp != NULL)
+		free(*tmp);
+	*tmp = NULL;
 	return (-1);
 }
 
@@ -64,8 +64,6 @@ static int	get_next_line_part(char **tmp, char *buff, int fd, ssize_t *rd)
 		*rd = read(fd, buff, BUFFER_SIZE);
 		if (*rd < 0)
 			return (-1);
-		if (*rd == 0)
-			break ;
 		buff[*rd] = '\0';
 		*tmp = ft_strjoin_gnl(*tmp, buff);
 		if (!(*tmp))
@@ -82,7 +80,7 @@ int	get_next_line(int fd, char **line)
 
 	tmp = NULL;
 	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
-		return (ft_free(tmp, buff, 1));
+		return (ft_free(&tmp, &buff, 1));
 	if (!buff && BUFFER_SIZE > 0)
 	{
 		buff = (char *)malloc(sizeof(*buff) * (BUFFER_SIZE + 1));
@@ -91,9 +89,9 @@ int	get_next_line(int fd, char **line)
 		buff[0] = '\0';
 	}
 	if (get_next_line_part(&tmp, buff, fd, &rd) == -1)
-		return (ft_free(tmp, buff, 1));
+		return (ft_free(&tmp, &buff, 1));
 	if (ft_separate(tmp, buff, line) == -1)
-		return (ft_free(tmp, buff, 1));
-	ft_free(tmp, buff, (rd == 0));
+		return (ft_free(&tmp, &buff, 1));
+	ft_free(&tmp, &buff, (rd == 0 && tmp != NULL));
 	return (rd > 0);
 }
