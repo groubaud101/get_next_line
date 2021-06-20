@@ -6,7 +6,7 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:27 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/20 10:43:46 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/20 19:54:09 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ static int	ft_free(char **tmp, char **buff, int to_free)
 {
 	if (to_free == 1)
 	{
-		if (*buff != NULL)
-			free(*buff);
+		free(*buff);
 		*buff = NULL;
 	}
-	if (*tmp != NULL)
-		free(*tmp);
+	free(*tmp);
 	*tmp = NULL;
 	return (-1);
 }
@@ -81,7 +79,7 @@ int	get_next_line(int fd, char **line)
 	tmp = NULL;
 	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
 		return (ft_free(&tmp, &buff, 1));
-	if (!buff && BUFFER_SIZE > 0)
+	if (!buff)
 	{
 		buff = (char *)malloc(sizeof(*buff) * (BUFFER_SIZE + 1));
 		if (!buff)

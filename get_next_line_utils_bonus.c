@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/17 23:29:28 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/17 23:29:28 by groubaud         ###   ########.fr       */
+/*   Created: 2021/06/13 10:13:42 by groubaud          #+#    #+#             */
+/*   Updated: 2021/06/20 10:44:19 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*ft_strjoin_gnl(char *s1, char const *s2)
 	dest[0] = '\0';
 	ft_strcat(dest, s1);
 	ft_strcat(dest, s2);
-	free(s1);
-	s1 = NULL;
+	if (s1 != NULL)
+		free(s1);
 	return (dest);
 }
