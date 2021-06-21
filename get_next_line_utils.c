@@ -6,14 +6,14 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:42 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/20 10:44:19 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:51:01 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <stdlib.h>
 
-int	ft_isinstr(char c, const char *str)
+ssize_t	ft_isinstr(char c, const char *str)
 {
 	ssize_t		index;
 

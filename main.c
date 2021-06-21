@@ -6,13 +6,14 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 13:29:06 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/19 22:50:20 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:17:43 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdio.h>
 #include "get_next_line.h"
+#include "ft_colors.h"
 
 #define AUTRE 1
 
@@ -35,14 +36,14 @@ int main(int ac, char **av)
 	while (ret > 0 && ct > 0)
 	{
 	   	ret = get_next_line(fd, &line);
-		printf("1line (ret %02i) %02i : |%s|\n%p\n", ret, i, line, line);
+		printf(RED"1line (ret %02i) %02i : |%s|\n%p"DEF"\n", ret, i, line, line);
 		if (line)
 		{
 			free(line);
 			line = NULL;
 		}
 	   	ret = get_next_line(fd, &line);
-		printf("2line (ret %02i) %02i : |%s|\n%p\n", ret, i, line, line);
+		printf(GREEN"2line (ret %02i) %02i : |%s|\n%p"DEF"\n", ret, i, line, line);
 		if (line)
 		{
 			free(line);

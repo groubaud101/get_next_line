@@ -6,11 +6,10 @@
 /*   By: groubaud <groubaud@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 10:13:27 by groubaud          #+#    #+#             */
-/*   Updated: 2021/06/20 19:54:09 by groubaud         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:53:27 by groubaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "get_next_line.h"
 
 static int	ft_separate(char *tmp, char *buff, char **line)
